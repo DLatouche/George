@@ -1,0 +1,8 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "front of George",
+  "main": "index.js",
+  "author": "Dorian Latouche",
+  "license": "MIT"
+}
