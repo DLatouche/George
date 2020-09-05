@@ -1,3 +1,6 @@
+#all
+.env
+
 #front
 /front/node_modules
 
