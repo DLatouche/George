@@ -1,4 +1,4 @@
-import Role from './role.model'
+import { Role, ADMIN } from './role.model'
 import RoleRepository from './role.repository'
 import RoleService from './role.service'
 
@@ -8,9 +8,6 @@ describe('role model testing', () => {
         role = new Role({ name: "Admin" })
     })
 
-    it('role model exist', async () => {
-        expect(role instanceof Role).toBe(true);
-    })
     it('role should be string', async () => {
         expect(typeof role.name).toBe("string");
     })
@@ -21,10 +18,6 @@ describe("role repository testing", () => {
 
     beforeEach(() => {
         roleRepository = new RoleRepository()
-    })
-
-    it('role repository exist', async () => {
-        expect(roleRepository instanceof RoleRepository).toBe(true);
     })
 
     describe('role repository insert', () => {
@@ -68,10 +61,6 @@ describe('role service testing', () => {
         roleService = new RoleService()
     })
 
-    it('role service exist', async () => {
-        expect(roleService instanceof RoleService).toBe(true);
-    })
-
     it('Create role return role', async () => {
         let role = new Role({ name: "Admin" })
         expect(roleService.create({ role }) instanceof Role).toBe(true)
@@ -81,6 +70,10 @@ describe('role service testing', () => {
         let role = new Role({ name: "Admin", })
         roleService.roleRepository.insert({ role })
         expect(() => { roleService.create({ role }) }).toThrow('Role already exist')
+    })
+
+    it('findByName return role', async () => {
+        expect(roleService.findByName({ name: ADMIN }) instanceof Role).toBe(true)
     })
 
 })

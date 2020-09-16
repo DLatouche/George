@@ -1,6 +1,8 @@
+import { ADMIN, MANAGER, GUEST, Role } from "./role.model"
+
 export default class RoleRepository {
     constructor() {
-        this.roles = []
+        this.roles = [new Role({ name: ADMIN }), new Role({ name: MANAGER }), new Role({ name: GUEST })]
     }
 
     insert = ({ role }) => {

@@ -10,4 +10,8 @@ export default class RoleService {
         if (checkRole) throw new Error('Role already exist')
         return this.roleRepository.insert({ role })
     }
+
+    findByName = ({ name }) => {
+        return this.roleRepository.findByName({ name })
+    }
 }

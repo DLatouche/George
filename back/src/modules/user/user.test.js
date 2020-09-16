@@ -8,7 +8,7 @@ const app = require("../../index");
 describe('User model testing', () => {
     let user = null
     beforeAll(() => {
-        user = new User({ id: 0, name: "Zwerque", password: "Rien-0707", role: 1 })
+        user = new User({ id: 0, name: "Zwerque", password: "Rien-0707", role: [] })
     })
 
     it('user model exist', async () => {
@@ -23,8 +23,8 @@ describe('User model testing', () => {
     it('password should be string', async () => {
         expect(typeof user.password).toBe("string");
     })
-    it('role should be string', async () => {
-        expect(typeof user.role).toBe("number");
+    it('roles should be array', async () => {
+        expect(Array.isArray(user.roles)).toBe(true);
     })
 });
 
@@ -128,13 +128,22 @@ describe('User service testing', () => {
 
     it('Create user return user', async () => {
         let user = new User({ id: 0, name: "Zwerque", password: "Rien-0707" })
-        expect(userService.create({ user }) instanceof User).toBe(true)
+        let newUser = await userService.create({ user })
+        expect(newUser instanceof User).toBe(true)
+    })
+
+    it('Create user without role, add defaull role', async () => {
+        let user = await userService.create({ user: new User({ name: "Usertest", password: "Rien-0707" }) })
+        expect(user.roles.length > 0).toBe(true)
     })
 
     it('Create user and check if username already exist', async () => {
         let user = new User({ id: 0, name: "Zwerque", password: "Rien-0707" })
         userService.userRepository.insert({ user })
-        expect(() => { userService.create({ user }) }).toThrow('User already exist with this name')
+        let error = Error
+        try { await userService.create({ user }) }
+        catch (e) { error = e }
+        await expect(error).toEqual(new Error('User already exist with this name'))
     })
 })
 
@@ -149,6 +158,14 @@ describe('User controller testing', () => {
         it('user controller get all users exist', async () => {
             const res = await request(app)
                 .get('/users')
+            expect(res.statusCode).toEqual(200)
+        })
+    })
+
+    describe('User controller login', () => {
+        it('Login exist', async () => {
+            const res = await request(app)
+                .post('/users/login')
             expect(res.statusCode).toEqual(200)
         })
     })

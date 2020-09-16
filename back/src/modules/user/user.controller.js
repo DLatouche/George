@@ -4,4 +4,8 @@ export default class UserController {
     getAllUsers = (req, res) => {
         res.send("Ok")
     }
+
+    login = (req, res) => {
+        res.send("Ok")
+    }
 }
