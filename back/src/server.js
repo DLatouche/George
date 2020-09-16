@@ -2,9 +2,9 @@ require('dotenv').config();
 import app from './'
 
 const port = process.env.PORT
-const name = process.env.NAME
+const mode = process.env.MODE
 
 app.listen(port, () => {
-    console.log(`Name: ${name}`);
+    console.log(`Mode: ${mode}`);
     console.log(`Port: ${port}`);
 });

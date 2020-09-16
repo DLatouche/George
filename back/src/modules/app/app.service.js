@@ -12,8 +12,8 @@ export default class AppService {
     login = async ({ name, password }) => {
         try {
             let user = await this.userService.findByNameAndPassword({ name, password })
-            let accessToken = jwt.sign({ id: user.id, name: user.name }, ACCESS_TOKEN_SECRET)
-            return { token: accessToken, userId: user.id, name: user.name, roles: user.roles }
+            let token = jwt.sign({ id: user.id, name: user.name, roles: user.roles }, ACCESS_TOKEN_SECRET)
+            return { token, userId: user.id, name: user.name, roles: user.roles }
         } catch (errorFindUser) {
             throw errorFindUser
         }

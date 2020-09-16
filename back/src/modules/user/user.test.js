@@ -207,29 +207,20 @@ describe('User', () => {
         })
 
         describe('get ► /users', () => {
-            it('path exist', async () => {
+
+            it('if no token send 401', async () => {
                 const res = await request(app)
                     .get('/users')
-                expect(res.statusCode).toEqual(200)
+                expect(res.statusCode).toEqual(401)
             })
 
-            // it('if no token send 401', async () => {
-            //     const res = await request(app)
-            //         .get('/users')
-            //     expect(res.statusCode).toEqual(401)
-            // })
-
-            // it('if token send 200', async () => {
-            //     let appService = new AppService()
-            //     let user = await appService.userService.create({ user: new User({ name: "Zwerque", password: "Rien-0707" }) })
-            //     console.log("user.test.js -> 212: user", user)
-            //     let data = await appService.login({ name: user.name, password: user.password })
-            //     console.log("user.test.js -> 214: token", token)
-            //     console.log("user.test.js -> 216: appSer", appSer)
-            //     let res = await request(app).get('/').set('Authorization', `Bearer ${data.token}`)
-            //         .get('/users')
-            //     expect(res.statusCode).toEqual(401)
-            // })
+            it('if token send 200', async () => {
+                let appService = new AppService()
+                let password = "Rien-0707"
+                let user = await appService.userService.create({ user: new User({ name: "Zwerque", password }) })
+                let data = await appService.login({ name: user.name, password })
+                let res = await request(app).get('/users').set('authorization', `Bearer ${data.token}`)
+            })
         })
     })
 })

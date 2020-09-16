@@ -36,6 +36,7 @@ export default class UserService {
             if (await bcrypt.compare(password, user.password)) return user
             else throw new Error(errorUserNotFound)
         } catch (e) {
+            console.log("user.service.js -> 41: e", e  )
             throw e
         }
     }
