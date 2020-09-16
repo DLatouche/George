@@ -4,5 +4,6 @@ const appRouter = express.Router()
 const appController = new AppController()
 
 appRouter.get('/', appController.getHome)
+appRouter.post('/login', appController.login)
 
 module.exports = appRouter;

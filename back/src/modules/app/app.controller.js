@@ -5,4 +5,8 @@ export default class AppController {
     getHome = (req, res) => {
         res.send("Home")
     }
+
+    login = (req, res) => {
+        res.send("Login")
+    }
 }

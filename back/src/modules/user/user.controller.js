@@ -1,11 +1,11 @@
-export default class UserController {
-    constructor() { }
+import UserService from "./user.service"
 
-    getAllUsers = (req, res) => {
-        res.send("Ok")
+export default class UserController {
+    constructor() {
+        this.userService = new UserService()
     }
 
-    login = (req, res) => {
+    getAllUsers = (req, res) => {
         res.send("Ok")
     }
 }

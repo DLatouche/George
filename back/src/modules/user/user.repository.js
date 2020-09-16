@@ -1,7 +1,14 @@
+
 export default class UserRepository {
     constructor() {
+        if (!!UserRepository.instance) {
+            return UserRepository.instance;
+        }
+        UserRepository.instance = this;
         this.users = [];
         this.id = 0
+
+        return this
     }
 
     insert = ({ user }) => {
@@ -37,7 +44,18 @@ export default class UserRepository {
         return null
     }
 
-    deleteById = ({ id }) => { 
+    findByNameAndPassword = ({ name, password }) => {
+        let index = 0
+        while (index < this.users.length) {
+            if (this.users[index].name === name && this.users[index].password === password) {
+                return this.users[index]
+            }
+            index++
+        }
+        return null
+    }
+
+    deleteById = ({ id }) => {
         let index = 0
         while (index < this.users.length) {
             if (this.users[index].id === id) {
@@ -47,4 +65,10 @@ export default class UserRepository {
         }
         return null
     }
+
+    clean = () => {
+        this.users = []
+        this.id = 0
+    }
 }
+
